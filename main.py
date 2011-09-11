@@ -14,9 +14,7 @@ def open_file_dialog():
         filename = QtGui.QFileDialog.getOpenFileName(None, 'Open file', '/home')
         new_img = scene.addPixmap(QtGui.QPixmap(filename))
         new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
-
-
-		
+        objectslist.addItem(filename)
 		
 app = QtGui.QApplication(sys.argv)
 
@@ -26,10 +24,9 @@ widget.setWindowIcon(QtGui.QIcon('img/icon.png'))
 widget.resize(800, 600)
 
 dialog = QtGui.QFileDialog()
-
+objectslist = QtGui.QListWidget()
 scene = QtGui.QGraphicsScene()
 scene.addPixmap(QtGui.QPixmap("img/test1.png"))
-
 
 six = scene.addPixmap(QtGui.QPixmap("img/test1.png"))
 six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
@@ -59,6 +56,7 @@ layout.addWidget(buttonRight)
 layout.addWidget(valueAngleLabel)
 layout.addWidget(valueAngle)
 layout.addWidget(buttonAddFile)
+layout.addWidget(objectslist)
 
 
 widget.setLayout(layout)
