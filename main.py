@@ -11,11 +11,11 @@ class MyView(QtGui.QGraphicsView):
         self.rotate(valueAngle.value())
 
 def open_file_dialog():
-        filename = QtGui.QFileDialog.getOpenFileName(None, 'Open file', '/home')
+        filename = QtGui.QFileDialog.getOpenFileName(None, 'Open file', '')
         new_img = scene.addPixmap(QtGui.QPixmap(filename))
         new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
         objectslist.addItem(filename)
-		
+	
 app = QtGui.QApplication(sys.argv)
 
 widget = QtGui.QWidget()
