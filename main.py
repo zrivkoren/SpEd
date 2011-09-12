@@ -10,11 +10,23 @@ class MyView(QtGui.QGraphicsView):
     def slotRotateRight(self):
         self.rotate(valueAngle.value())
 
-def open_file_dialog():
-        filename = QtGui.QFileDialog.getOpenFileName(None, 'Open file', '')
-        new_img = scene.addPixmap(QtGui.QPixmap(filename))
-        new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
-        objectslist.addItem(filename)
+    def open_file_dialog(self):
+            self.filename = QtGui.QFileDialog.getOpenFileName(None, 'Open file', '')
+            new_img = scene.addPixmap(QtGui.QPixmap(self.filename))
+            new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
+            objectslist.addItem(self.filename)
+
+#begin load test data			
+def load_test_data():
+    six = scene.addPixmap(QtGui.QPixmap("img/test1.png"))
+    six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
+    objectslist.addItem("img/test1.png")
+
+    pix = scene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
+    pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
+    objectslist.addItem("img/test2.jpg")
+#end load test data
+
 	
 app = QtGui.QApplication(sys.argv)
 
@@ -26,28 +38,24 @@ widget.resize(800, 600)
 dialog = QtGui.QFileDialog()
 objectslist = QtGui.QListWidget()
 scene = QtGui.QGraphicsScene()
-scene.addPixmap(QtGui.QPixmap("img/test1.png"))
-
-six = scene.addPixmap(QtGui.QPixmap("img/test1.png"))
-six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
-
-pix = scene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
-pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
 
 view = MyView(scene)
+
+load_test_data()
 
 buttonLeft  = QtGui.QPushButton("Rotate Left All")
 buttonRight = QtGui.QPushButton("Rotate Right All")
 buttonAddFile = QtGui.QPushButton("Add file to canvas")
+buttonDelFile = QtGui.QPushButton("Delete image from canvas")
 
 valueAngle = QtGui.QSpinBox()
 valueAngle.setValue(10)
 valueAngle.setMaximum(359)
 valueAngleLabel = QtGui.QLabel("Enter value of angle rotate:")
 
-QtCore.QObject.connect(buttonLeft,QtCore.SIGNAL("clicked()"),view.slotRotateLeft )
+QtCore.QObject.connect(buttonLeft,QtCore.SIGNAL("clicked()"),view.slotRotateLeft)
 QtCore.QObject.connect(buttonRight,QtCore.SIGNAL("clicked()"),view.slotRotateRight)
-QtCore.QObject.connect(buttonAddFile,QtCore.SIGNAL("clicked()"),open_file_dialog)
+QtCore.QObject.connect(buttonAddFile,QtCore.SIGNAL("clicked()"),view.open_file_dialog)
 
 layout=QtGui.QVBoxLayout()
 layout.addWidget(view)
@@ -56,6 +64,7 @@ layout.addWidget(buttonRight)
 layout.addWidget(valueAngleLabel)
 layout.addWidget(valueAngle)
 layout.addWidget(buttonAddFile)
+layout.addWidget(buttonDelFile)
 layout.addWidget(objectslist)
 
 
