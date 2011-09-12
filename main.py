@@ -11,7 +11,7 @@ class MyView(QtGui.QGraphicsView):
         self.rotate(valueAngle.value())
 
     def open_file_dialog(self):
-            self.filename = QtGui.QFileDialog.getOpenFileName(None, 'Open file', '')
+            self.filename = QtGui.QFileDialog.getOpenFileName(None, 'Open file for add to canvas', '')
             new_img = scene.addPixmap(QtGui.QPixmap(self.filename))
             new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
             objectslist.addItem(self.filename)
