@@ -5,9 +5,9 @@ import sys
 class MyView(QtGui.QGraphicsView):
     def __init__(self,*args):
         QtGui.QGraphicsView.__init__(self,*args)
-    def slotRotateLeft (self):
+    def allRotateLeft (self):
         self.rotate(-valueAngle.value())
-    def slotRotateRight(self):
+    def allRotateRight(self):
         self.rotate(valueAngle.value())
 
     def open_file_dialog(self):
@@ -15,6 +15,8 @@ class MyView(QtGui.QGraphicsView):
             new_img = scene.addPixmap(QtGui.QPixmap(self.filename))
             new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
             objectslist.addItem(self.filename)
+    #        new_img.setRotation(90)
+   # def RotateLeft
 
 #begin load test data			
 def load_test_data():
@@ -24,7 +26,7 @@ def load_test_data():
 
     pix = scene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
-    objectslist.addItem("img/test2.jpg")
+    objectslist.addItem("img/test2.jpg")    
 #end load test data
 
 	
@@ -53,8 +55,8 @@ valueAngle.setValue(10)
 valueAngle.setMaximum(359)
 valueAngleLabel = QtGui.QLabel("Enter value of angle rotate:")
 
-QtCore.QObject.connect(buttonLeft,QtCore.SIGNAL("clicked()"),view.slotRotateLeft)
-QtCore.QObject.connect(buttonRight,QtCore.SIGNAL("clicked()"),view.slotRotateRight)
+QtCore.QObject.connect(buttonLeft,QtCore.SIGNAL("clicked()"),view.allRotateLeft)
+QtCore.QObject.connect(buttonRight,QtCore.SIGNAL("clicked()"),view.allRotateRight)
 QtCore.QObject.connect(buttonAddFile,QtCore.SIGNAL("clicked()"),view.open_file_dialog)
 
 layout=QtGui.QVBoxLayout()
