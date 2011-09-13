@@ -13,9 +13,10 @@ class MyView(QtGui.QGraphicsView):
     def open_file_dialog(self):
             self.filename = QtGui.QFileDialog.getOpenFileName(None, 'Open file for add to canvas', '')
             new_img = scene.addPixmap(QtGui.QPixmap(self.filename))
-            new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
-            objectslist.addItem(self.filename)
-            new_img.rotate(90)
+            if not (unicode(self.filename)==''):
+                new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
+                objectslist.addItem(self.filename)
+                new_img.rotate(90)            
     #def RotateLeft(self):
         
 
@@ -32,7 +33,7 @@ def load_test_data():
 def printItemText():
     cur = objectslist.currentItem()
     #cur_item_in_scene = scene.
-    print(cur.text())
+    print(unicode(cur.text()))
     #print(objectslist.currentItem().text())    
     #print(MyView.)	
 	
