@@ -15,8 +15,9 @@ class MyView(QtGui.QGraphicsView):
             new_img = scene.addPixmap(QtGui.QPixmap(self.filename))
             new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
             objectslist.addItem(self.filename)
-    #        new_img.setRotation(90)
-   # def RotateLeft
+            new_img.rotate(90)
+    #def RotateLeft(self):
+        
 
 #begin load test data			
 def load_test_data():
@@ -28,7 +29,12 @@ def load_test_data():
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test2.jpg")    
 #end load test data
-
+def printItemText():
+    cur = objectslist.currentItem()
+    #cur_item_in_scene = scene.
+    print(cur.text())
+    #print(objectslist.currentItem().text())    
+    #print(MyView.)	
 	
 app = QtGui.QApplication(sys.argv)
 
@@ -58,6 +64,7 @@ valueAngleLabel = QtGui.QLabel("Enter value of angle rotate:")
 QtCore.QObject.connect(buttonLeft,QtCore.SIGNAL("clicked()"),view.allRotateLeft)
 QtCore.QObject.connect(buttonRight,QtCore.SIGNAL("clicked()"),view.allRotateRight)
 QtCore.QObject.connect(buttonAddFile,QtCore.SIGNAL("clicked()"),view.open_file_dialog)
+QtCore.QObject.connect(objectslist,QtCore.SIGNAL("itemSelectionChanged()"),printItemText)
 
 layout=QtGui.QVBoxLayout()
 layout.addWidget(view)
