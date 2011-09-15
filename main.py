@@ -16,13 +16,16 @@ class MyView(QtGui.QGraphicsView):
             new_img = mscene.addPixmap(QtGui.QPixmap(self.filename))
             if not (unicode(self.filename)==''):
                 new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
-                objectslist.addItem(self.filename)
-                new_img.rotate(90)            
+                objectslist.addItem(self.filename)         
 
-def RotateImageLeft(self):
-    self.rotate(-valueAngle.value())
-def RotateImageRight(self):
-    self.rotate(valueAngle.value())        
+    def RotateImageLeft(self):
+        if not objectslist.currentRow() == -1:
+            mscene.items()[objectslist.currentRow()].rotate(-valueAngle.value())
+        else: print("Select item in objects list")
+    def RotateImageRight(self):
+        if not objectslist.currentRow() == -1:
+            mscene.items()[objectslist.currentRow()].rotate(valueAngle.value())
+        else: print("Select item in objects list")            
 
 #begin load test data			
 def load_test_data():
@@ -30,37 +33,13 @@ def load_test_data():
     six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test1.png")
 	
-    #six.setFlags(QtGui.QGraphicsItem.ItemIsFocusable)
-
     pix = mscene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test2.jpg")
-    print(pix)
-    #objectslist.setFocus(objectslist.items[1])
-    #print(dir(objectslist))
-    print(objectslist.SelectItems)
-	#setItemSelected
-	
 #end load test data
 
-def printItemText():
-    #cur = objectslist.currentItem()
-    #cur_item_in_mscene = mscene.
-    #print(unicode(cur.text()))
-    #print(objectslist.currentItem().text())     
-    #print(scene_items_list[0])   
-    #print(mscene.items())
-    #print(dir(objectslist.currentItem().text()))
-    #print('- - - - - ')
-    currentColor = QColor(0,255,0)    
-    #print(objectslist.currentItem().text())
-    print(objectslist[0])
-    objectslist.currentItem().setTextColor(currentColor)
-   # print(objectslist.currentItem())
-    
-   # print(dir(scene_items_list[0]))
-    #print(scene_items_list[0].rotate(90))
-    
+def printItemText():    
+    print(objectslist.currentItem().text())
 	
 app = QtGui.QApplication(sys.argv)
 
@@ -93,11 +72,8 @@ QtCore.QObject.connect(buttonLeftAll,QtCore.SIGNAL("clicked()"),view.allRotateLe
 QtCore.QObject.connect(buttonRightAll,QtCore.SIGNAL("clicked()"),view.allRotateRight)
 QtCore.QObject.connect(buttonAddFile,QtCore.SIGNAL("clicked()"),view.open_file_dialog)
 QtCore.QObject.connect(objectslist,QtCore.SIGNAL("itemSelectionChanged()"),printItemText)
-QtCore.QObject.connect(buttonRotateLeftOne,QtCore.SIGNAL("clicked()"),RotateImageLeft)
-QtCore.QObject.connect(buttonRotateRightOne,QtCore.SIGNAL("clicked()"),RotateImageRight)
-
-RotateImageLeft = RotateImageLeft(mscene.items()[1])
-#RotateImageRight = RotateImageRight()
+QtCore.QObject.connect(buttonRotateLeftOne,QtCore.SIGNAL("clicked()"),view.RotateImageLeft)
+QtCore.QObject.connect(buttonRotateRightOne,QtCore.SIGNAL("clicked()"),view.RotateImageRight)
 
 layout=QtGui.QVBoxLayout()
 layout.addWidget(view)
@@ -110,9 +86,6 @@ layout.addWidget(buttonDelFile)
 layout.addWidget(objectslist)
 layout.addWidget(buttonRotateLeftOne)
 layout.addWidget(buttonRotateRightOne)
-
-
-
 
 widget.setLayout(layout)
 widget.show()
