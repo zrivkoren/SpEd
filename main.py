@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 from PyQt4 import QtCore, QtGui
 import sys
+from PyQt4.QtGui import QColor
      
 class MyView(QtGui.QGraphicsView):
     def __init__(self,*args):
@@ -26,28 +27,35 @@ def RotateImageRight(self):
 #begin load test data			
 def load_test_data():
     six = mscene.addPixmap(QtGui.QPixmap("img/test1.png"))
-    six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)	
+    six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test1.png")
+	
     #six.setFlags(QtGui.QGraphicsItem.ItemIsFocusable)
 
     pix = mscene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
-    objectslist.addItem("img/test2.jpg")    
+    objectslist.addItem("img/test2.jpg")
+    print(pix)
+	
 #end load test data
 
 def printItemText():
-    cur = objectslist.currentItem()
+    #cur = objectslist.currentItem()
     #cur_item_in_mscene = mscene.
     #print(unicode(cur.text()))
-    #print(objectslist.currentItem().text()) 
-    #print(view.items())
-    scene_items_list = mscene.items()
-   # print(scene_items_list[0])
-   # print('All list :')
-    #print(scene_items_list)
+    #print(objectslist.currentItem().text())     
+    #print(scene_items_list[0])   
+    #print(mscene.items())
+    #print(dir(objectslist.currentItem().text()))
+    #print('- - - - - ')
+    currentColor = QColor(1, 0, 0)
+    objectslist.currentItem().setTextColor(currentColor)	
+    print(objectslist.currentItem().text())
+    print(objectslist.currentItem())
+    
    # print(dir(scene_items_list[0]))
     #print(scene_items_list[0].rotate(90))
-    RotateImageLeft(scene_items_list[1])
+    
 	
 app = QtGui.QApplication(sys.argv)
 
@@ -58,12 +66,13 @@ widget.resize(800, 600)
 
 dialog = QtGui.QFileDialog()
 objectslist = QtGui.QListWidget()
+objectslist.setDragDropMode(objectslist.InternalMove)
+#objectslist.setFocus
 mscene = QtGui.QGraphicsScene()
 
 view = MyView(mscene)
-gItems = QtGui.QGraphicsItem
 load_test_data()
-#print(dir(gItems))
+
 buttonLeftAll  = QtGui.QPushButton("Rotate Left All")
 buttonRightAll = QtGui.QPushButton("Rotate Right All")
 buttonAddFile = QtGui.QPushButton("Add file to canvas")
