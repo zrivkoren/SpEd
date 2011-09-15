@@ -36,6 +36,10 @@ def load_test_data():
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test2.jpg")
     print(pix)
+    #objectslist.setFocus(objectslist.items[1])
+    #print(dir(objectslist))
+    print(objectslist.SelectItems)
+	#setItemSelected
 	
 #end load test data
 
@@ -48,10 +52,11 @@ def printItemText():
     #print(mscene.items())
     #print(dir(objectslist.currentItem().text()))
     #print('- - - - - ')
-    currentColor = QColor(1, 0, 0)
-    objectslist.currentItem().setTextColor(currentColor)	
-    print(objectslist.currentItem().text())
-    print(objectslist.currentItem())
+    currentColor = QColor(0,255,0)    
+    #print(objectslist.currentItem().text())
+    print(objectslist[0])
+    objectslist.currentItem().setTextColor(currentColor)
+   # print(objectslist.currentItem())
     
    # print(dir(scene_items_list[0]))
     #print(scene_items_list[0].rotate(90))
@@ -66,8 +71,7 @@ widget.resize(800, 600)
 
 dialog = QtGui.QFileDialog()
 objectslist = QtGui.QListWidget()
-objectslist.setDragDropMode(objectslist.InternalMove)
-#objectslist.setFocus
+#objectslist.setDragDropMode(objectslist.InternalMove)
 mscene = QtGui.QGraphicsScene()
 
 view = MyView(mscene)
@@ -77,6 +81,8 @@ buttonLeftAll  = QtGui.QPushButton("Rotate Left All")
 buttonRightAll = QtGui.QPushButton("Rotate Right All")
 buttonAddFile = QtGui.QPushButton("Add file to canvas")
 buttonDelFile = QtGui.QPushButton("Delete image from canvas")
+buttonRotateLeftOne = QtGui.QPushButton("Rotate left one image")
+buttonRotateRightOne = QtGui.QPushButton("Rotate left one image")
 
 valueAngle = QtGui.QSpinBox()
 valueAngle.setValue(10)
@@ -87,6 +93,11 @@ QtCore.QObject.connect(buttonLeftAll,QtCore.SIGNAL("clicked()"),view.allRotateLe
 QtCore.QObject.connect(buttonRightAll,QtCore.SIGNAL("clicked()"),view.allRotateRight)
 QtCore.QObject.connect(buttonAddFile,QtCore.SIGNAL("clicked()"),view.open_file_dialog)
 QtCore.QObject.connect(objectslist,QtCore.SIGNAL("itemSelectionChanged()"),printItemText)
+QtCore.QObject.connect(buttonRotateLeftOne,QtCore.SIGNAL("clicked()"),RotateImageLeft)
+QtCore.QObject.connect(buttonRotateRightOne,QtCore.SIGNAL("clicked()"),RotateImageRight)
+
+RotateImageLeft = RotateImageLeft(mscene.items()[1])
+#RotateImageRight = RotateImageRight()
 
 layout=QtGui.QVBoxLayout()
 layout.addWidget(view)
@@ -97,6 +108,8 @@ layout.addWidget(valueAngle)
 layout.addWidget(buttonAddFile)
 layout.addWidget(buttonDelFile)
 layout.addWidget(objectslist)
+layout.addWidget(buttonRotateLeftOne)
+layout.addWidget(buttonRotateRightOne)
 
 
 
