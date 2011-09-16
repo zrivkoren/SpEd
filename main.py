@@ -91,6 +91,7 @@ layout.addWidget(buttonDelFile)
 layout.addWidget(objectslist)
 layout.addWidget(buttonRotateLeftOne)
 layout.addWidget(buttonRotateRightOne)
+layout.addWidget(buttonSave)
 
 widget.setLayout(layout)
 widget.show()
