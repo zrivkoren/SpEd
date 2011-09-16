@@ -40,6 +40,9 @@ def load_test_data():
 
 def printItemText():    
     print(objectslist.currentItem().text())
+
+def saveImage():
+    print("Save me please")
 	
 app = QtGui.QApplication(sys.argv)
 
@@ -62,6 +65,7 @@ buttonAddFile = QtGui.QPushButton("Add file to canvas")
 buttonDelFile = QtGui.QPushButton("Delete image from canvas")
 buttonRotateLeftOne = QtGui.QPushButton("Rotate left one image")
 buttonRotateRightOne = QtGui.QPushButton("Rotate left one image")
+buttonSave = QtGui.QPushButton("Save canvas")
 
 valueAngle = QtGui.QSpinBox()
 valueAngle.setValue(10)
@@ -74,6 +78,7 @@ QtCore.QObject.connect(buttonAddFile,QtCore.SIGNAL("clicked()"),view.open_file_d
 QtCore.QObject.connect(objectslist,QtCore.SIGNAL("itemSelectionChanged()"),printItemText)
 QtCore.QObject.connect(buttonRotateLeftOne,QtCore.SIGNAL("clicked()"),view.RotateImageLeft)
 QtCore.QObject.connect(buttonRotateRightOne,QtCore.SIGNAL("clicked()"),view.RotateImageRight)
+QtCore.QObject.connect(buttonSave,QtCore.SIGNAL("clicked()"),saveImage)
 
 layout=QtGui.QVBoxLayout()
 layout.addWidget(view)
