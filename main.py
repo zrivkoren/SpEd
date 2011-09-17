@@ -12,11 +12,11 @@ class MyView(QtGui.QGraphicsView):
         self.rotate(valueAngle.value())
 
     def open_file_dialog(self):
-            self.filename = QtGui.QFileDialog.getOpenFileName(None, 'Open file for add to canvas', '')
-            new_img = mscene.addPixmap(QtGui.QPixmap(self.filename))
-            if not (unicode(self.filename)==''):
+            self.fileName = QtGui.QFileDialog.getOpenFileName(None, 'Open file for add to canvas', '')
+            new_img = mscene.addPixmap(QtGui.QPixmap(self.fileName))
+            if not (unicode(self.fileName)==''):
                 new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
-                objectslist.addItem(self.filename)         
+                objectslist.addItem(self.fileName)         
 
     def RotateImageLeft(self):
         if not objectslist.currentRow() == -1:
@@ -27,6 +27,15 @@ class MyView(QtGui.QGraphicsView):
             mscene.items()[objectslist.currentRow()].rotate(valueAngle.value())
         else: print("Select item in objects list")            
 
+    def saveImage(self):    
+        img = QtGui.QImage(1024,768,QtGui.QImage.Format_RGB32)
+        img.fill(QtGui.QColor(255,255,255).rgb())
+        painter = QtGui.QPainter(img)    
+        painter.setRenderHints(QtGui.QPainter.Antialiasing|QtGui.QPainter.TextAntialiasing|QtGui.QPainter.SmoothPixmapTransform)   
+        view.render(painter)
+        painter.end()
+        img.save("scene1.png")
+		
 #begin load test data			
 def load_test_data():
     six = mscene.addPixmap(QtGui.QPixmap("img/test1.png"))
@@ -40,15 +49,6 @@ def load_test_data():
 
 def printItemText():    
     print(objectslist.currentItem().text())
-
-def saveImage():    
-    img = QtGui.QImage(1024,768,QtGui.QImage.Format_RGB32)
-    img.fill(QtGui.QColor(255,255,255).rgb())
-    painter = QtGui.QPainter(img)    
-    painter.setRenderHints(QtGui.QPainter.Antialiasing|QtGui.QPainter.TextAntialiasing|QtGui.QPainter.SmoothPixmapTransform)   
-    view.render(painter)
-    painter.end()
-    img.save("scene1.png")
 	
 app = QtGui.QApplication(sys.argv)
 
@@ -84,7 +84,7 @@ QtCore.QObject.connect(buttonAddFile,QtCore.SIGNAL("clicked()"),view.open_file_d
 QtCore.QObject.connect(objectslist,QtCore.SIGNAL("itemSelectionChanged()"),printItemText)
 QtCore.QObject.connect(buttonRotateLeftOne,QtCore.SIGNAL("clicked()"),view.RotateImageLeft)
 QtCore.QObject.connect(buttonRotateRightOne,QtCore.SIGNAL("clicked()"),view.RotateImageRight)
-QtCore.QObject.connect(buttonSave,QtCore.SIGNAL("clicked()"),saveImage)
+QtCore.QObject.connect(buttonSave,QtCore.SIGNAL("clicked()"),view.saveImage)
 
 layout=QtGui.QVBoxLayout()
 layout.addWidget(view)
