@@ -41,8 +41,14 @@ def load_test_data():
 def printItemText():    
     print(objectslist.currentItem().text())
 
-def saveImage():
-    print("Save me please")
+def saveImage():    
+    img = QtGui.QImage(1024,768,QtGui.QImage.Format_RGB32)
+    img.fill(QtGui.QColor(255,255,255).rgb())
+    painter = QtGui.QPainter(img)    
+    painter.setRenderHints(QtGui.QPainter.Antialiasing|QtGui.QPainter.TextAntialiasing|QtGui.QPainter.SmoothPixmapTransform)   
+    view.render(painter)
+    painter.end()
+    img.save("scene1.png")
 	
 app = QtGui.QApplication(sys.argv)
 
