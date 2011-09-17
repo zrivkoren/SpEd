@@ -27,8 +27,8 @@ class MyView(QtGui.QGraphicsView):
             mscene.items()[objectslist.currentRow()].rotate(valueAngle.value())
         else: print("Select item in objects list")            
 
-    def saveImage(self):    
-        img = QtGui.QImage(1024,768,QtGui.QImage.Format_RGB32)
+    def saveImage(self):
+        img = QtGui.QImage(self.size().width(),self.size().height(),QtGui.QImage.Format_RGB32)
         img.fill(QtGui.QColor(255,255,255).rgb())
         painter = QtGui.QPainter(img)    
         painter.setRenderHints(QtGui.QPainter.Antialiasing|QtGui.QPainter.TextAntialiasing|QtGui.QPainter.SmoothPixmapTransform)   
