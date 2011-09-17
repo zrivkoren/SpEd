@@ -16,7 +16,9 @@ class MyView(QtGui.QGraphicsView):
             new_img = mscene.addPixmap(QtGui.QPixmap(self.fileName))
             if not (unicode(self.fileName)==''):
                 new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
-                objectslist.addItem(self.fileName)         
+                objectslist.addItem(self.fileName) 
+    #ENTER setZValue Image
+				
 
     def RotateImageLeft(self):
         if not objectslist.currentRow() == -1:
@@ -38,7 +40,36 @@ class MyView(QtGui.QGraphicsView):
         img.save(fileName)
 		
     def imageUp(self):
-	    pass
+        if not objectslist.currentRow() == -1:
+            if not objectslist.currentRow() == 0:
+                #print(mscene.items()[objectslist.currentRow()])
+                #print(view.items()[objectslist.currentRow()])
+                #print(objectslist.currentRow())
+                tempZValue = mscene.items()[objectslist.currentRow()].zValue()
+                print(mscene.items()[objectslist.currentRow()-1].zValue())
+                mscene.items()[objectslist.currentRow()].setZValue(mscene.items()[objectslist.currentRow()-1].zValue())
+                mscene.items()[objectslist.currentRow()-1].setZValue(tempZValue)
+				
+                #print(mscene.items()[objectslist.currentRow()].zValue())
+                tempItem = view.items()[objectslist.currentRow()]
+                view.items()[objectslist.currentRow()] = view.items()[objectslist.currentRow()-1]
+                view.items()[objectslist.currentRow()-1] = tempItem
+				
+                print(objectslist.currentRow())
+                print(dir(objectslist))
+                tempItemList = objectslist.items()[objectslist.currentRow()]
+                copyCurrentItemList.deepcopy(objectslist.items()[objectslist.currentRow()])
+                print(tempItemList, copyCurrentItemList)
+                objectslist.items()[objectslist.currentRow()] = objectslist.items()[objectslist.currentRow()-1]
+                objectslist.items()[objectslist.currentRow()-1] = copyCurrentItemList
+                view.items()[objectslist.currentRow()] = view.items()[objectslist.currentRow()-1]
+                view.items()[objectslist.currentRow()-1] = tempItem
+            #print(dir(mscene.items()))
+			#print(mscene.items()[objectslist.currentRow()])
+            #print(objectslist.currentItem().text())
+            #print(objectslist.currentRow())
+            print("- - -")
+        else: print("Select item in objects list")
 	
     def imageDown(self):
         pass
@@ -48,15 +79,17 @@ class MyView(QtGui.QGraphicsView):
 def load_test_data():
     six = mscene.addPixmap(QtGui.QPixmap("img/test1.png"))
     six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
-    objectslist.addItem("img/test1.png")
+    objectslist.addItem("img/test1.png")    
 	
     pix = mscene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
-    objectslist.addItem("img/test2.jpg")
+    objectslist.addItem("img/test2.jpg")	
+    mscene.items()[0].setZValue(0.2)
+    mscene.items()[1].setZValue(0.1)    
 #end load test data
 
 def printItemText():    
-    print(objectslist.currentItem().text())
+    pass
 	
 app = QtGui.QApplication(sys.argv)
 
@@ -80,6 +113,8 @@ buttonDelFile = QtGui.QPushButton("Delete image from canvas")
 buttonRotateLeftOne = QtGui.QPushButton("Rotate left one image")
 buttonRotateRightOne = QtGui.QPushButton("Rotate left one image")
 buttonSave = QtGui.QPushButton("Save canvas")
+buttonUp = QtGui.QPushButton("Image up")
+buttonDown = QtGui.QPushButton("Image down")
 
 valueAngle = QtGui.QSpinBox()
 valueAngle.setValue(10)
