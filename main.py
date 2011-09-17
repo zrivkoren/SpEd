@@ -37,6 +37,13 @@ class MyView(QtGui.QGraphicsView):
         fileName = QtGui.QFileDialog.getSaveFileName(self, "Save canvas to image", QtCore.QDir.currentPath(),self.trUtf8("*.png"), None)
         img.save(fileName)
 		
+    def imageUp(self):
+	    pass
+	
+    def imageDown(self):
+        pass
+		
+		
 #begin load test data			
 def load_test_data():
     six = mscene.addPixmap(QtGui.QPixmap("img/test1.png"))
@@ -86,6 +93,8 @@ QtCore.QObject.connect(objectslist,QtCore.SIGNAL("itemSelectionChanged()"),print
 QtCore.QObject.connect(buttonRotateLeftOne,QtCore.SIGNAL("clicked()"),view.RotateImageLeft)
 QtCore.QObject.connect(buttonRotateRightOne,QtCore.SIGNAL("clicked()"),view.RotateImageRight)
 QtCore.QObject.connect(buttonSave,QtCore.SIGNAL("clicked()"),view.saveImage)
+QtCore.QObject.connect(buttonUp,QtCore.SIGNAL("clicked()"),view.imageUp)
+QtCore.QObject.connect(buttonDown,QtCore.SIGNAL("clicked()"),view.imageDown)
 
 layout=QtGui.QVBoxLayout()
 layout.addWidget(view)
@@ -98,6 +107,8 @@ layout.addWidget(buttonDelFile)
 layout.addWidget(objectslist)
 layout.addWidget(buttonRotateLeftOne)
 layout.addWidget(buttonRotateRightOne)
+layout.addWidget(buttonUp)
+layout.addWidget(buttonDown)
 layout.addWidget(buttonSave)
 
 widget.setLayout(layout)
