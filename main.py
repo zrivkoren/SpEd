@@ -34,7 +34,8 @@ class MyView(QtGui.QGraphicsView):
         painter.setRenderHints(QtGui.QPainter.Antialiasing|QtGui.QPainter.TextAntialiasing|QtGui.QPainter.SmoothPixmapTransform)   
         view.render(painter)
         painter.end()
-        img.save("scene1.png")
+        fileName = QtGui.QFileDialog.getSaveFileName(self, "Save canvas to image", QtCore.QDir.currentPath(),self.trUtf8("*.png"), None)
+        img.save(fileName)
 		
 #begin load test data			
 def load_test_data():
