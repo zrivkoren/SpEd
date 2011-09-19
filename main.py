@@ -45,15 +45,14 @@ class MyView(QtGui.QGraphicsView):
                 #print(mscene.items()[objectslist.currentRow()])
                 #print(view.items()[objectslist.currentRow()])
                 #print(objectslist.currentRow())
-                tempZValue = mscene.items()[objectslist.currentRow()].zValue()
-                print(mscene.items()[objectslist.currentRow()-1].zValue())
+                tempZValue = mscene.items()[objectslist.currentRow()].zValue()                
                 mscene.items()[objectslist.currentRow()].setZValue(mscene.items()[objectslist.currentRow()-1].zValue())
                 mscene.items()[objectslist.currentRow()-1].setZValue(tempZValue)
 				
                 #print(mscene.items()[objectslist.currentRow()].zValue())
-                tempItem = view.items()[objectslist.currentRow()]
-                view.items()[objectslist.currentRow()] = view.items()[objectslist.currentRow()-1]
-                view.items()[objectslist.currentRow()-1] = tempItem
+                tempItem = mscene.items()[objectslist.currentRow()]
+                mscene.items()[objectslist.currentRow()] = mscene.items()[objectslist.currentRow()-1]
+                mscene.items()[objectslist.currentRow()-1] = tempItem
                 
                 tempItemList = objectslist.item(objectslist.currentRow()).clone()                
                 #print(dir(objectslist))
@@ -82,6 +81,7 @@ def load_test_data():
 
 def printItemText():    
     print(objectslist.currentRow())
+    print(mscene.items()[objectslist.currentRow()].zValue())
 	
 app = QtGui.QApplication(sys.argv)
 
