@@ -54,20 +54,12 @@ class MyView(QtGui.QGraphicsView):
                 tempItem = view.items()[objectslist.currentRow()]
                 view.items()[objectslist.currentRow()] = view.items()[objectslist.currentRow()-1]
                 view.items()[objectslist.currentRow()-1] = tempItem
-				
-                print(objectslist.currentRow())
-                print(dir(objectslist))
-                tempItemList = objectslist.items()[objectslist.currentRow()]
-                copyCurrentItemList.deepcopy(objectslist.items()[objectslist.currentRow()])
-                print(tempItemList, copyCurrentItemList)
-                objectslist.items()[objectslist.currentRow()] = objectslist.items()[objectslist.currentRow()-1]
-                objectslist.items()[objectslist.currentRow()-1] = copyCurrentItemList
-                view.items()[objectslist.currentRow()] = view.items()[objectslist.currentRow()-1]
-                view.items()[objectslist.currentRow()-1] = tempItem
-            #print(dir(mscene.items()))
-			#print(mscene.items()[objectslist.currentRow()])
-            #print(objectslist.currentItem().text())
-            #print(objectslist.currentRow())
+                
+                tempItemList = objectslist.item(objectslist.currentRow()).clone()                
+                #print(dir(objectslist))
+                objectslist.insertItem(objectslist.currentRow(),objectslist.item(objectslist.currentRow()-1))
+                objectslist.insertItem(objectslist.currentRow()-1,tempItemList)
+                objectslist.takeItem(objectslist.currentRow())               
             print("- - -")
         else: print("Select item in objects list")
 	
@@ -89,7 +81,7 @@ def load_test_data():
 #end load test data
 
 def printItemText():    
-    pass
+    print(objectslist.currentRow())
 	
 app = QtGui.QApplication(sys.argv)
 
