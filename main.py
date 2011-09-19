@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 from PyQt4 import QtCore, QtGui
 import sys
+import copy
 from PyQt4.QtGui import QColor
      
 class MyView(QtGui.QGraphicsView):
@@ -16,7 +17,8 @@ class MyView(QtGui.QGraphicsView):
             new_img = mscene.addPixmap(QtGui.QPixmap(self.fileName))
             if not (unicode(self.fileName)==''):
                 new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
-                objectslist.addItem(self.fileName) 
+                objectslist.addItem(self.fileName)
+                print(dir(mscene.items()))				
     #ENTER setZValue Image
 				
 
@@ -45,12 +47,14 @@ class MyView(QtGui.QGraphicsView):
                 #print(mscene.items()[objectslist.currentRow()])
                 #print(view.items()[objectslist.currentRow()])
                 #print(objectslist.currentRow())
-                tempZValue = mscene.items()[objectslist.currentRow()].zValue()                
+                tempZValue = copy.deepcopy(mscene.items()[objectslist.currentRow()].zValue())
                 mscene.items()[objectslist.currentRow()].setZValue(mscene.items()[objectslist.currentRow()-1].zValue())
                 mscene.items()[objectslist.currentRow()-1].setZValue(tempZValue)
 				
-                #print(mscene.items()[objectslist.currentRow()].zValue())
-                tempItem = mscene.items()[objectslist.currentRow()]
+                print("objectslist.currentRow()",objectslist.currentRow())
+                print("ZValue currentRow",mscene.items()[objectslist.currentRow()].zValue())
+                print("ZValue currentRow -1",mscene.items()[objectslist.currentRow()-1].zValue())
+                tempItem = copy.deepcopy(mscene.items()[objectslist.currentRow()])
                 mscene.items()[objectslist.currentRow()] = mscene.items()[objectslist.currentRow()-1]
                 mscene.items()[objectslist.currentRow()-1] = tempItem
                 
@@ -75,8 +79,9 @@ def load_test_data():
     pix = mscene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test2.jpg")	
+    print(objectslist.currentIndex().column())
     mscene.items()[0].setZValue(0.2)
-    mscene.items()[1].setZValue(0.1)    
+    mscene.items()[1].setZValue(0.1)
 #end load test data
 
 def printItemText():    
@@ -92,6 +97,7 @@ widget.resize(800, 600)
 
 dialog = QtGui.QFileDialog()
 objectslist = QtGui.QListWidget()
+#objectslist.setSortingEnabled(True)
 #objectslist.setDragDropMode(objectslist.InternalMove)
 mscene = QtGui.QGraphicsScene()
 
