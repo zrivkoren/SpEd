@@ -46,10 +46,11 @@ class MyView(QtGui.QGraphicsView):
     def imageUp(self):
         if not objectslist.currentRow() == -1:
             if not objectslist.currentRow() == 0:
-                #print(mscene.items()[objectslist.currentRow()])
+                cR = objectslist.currentRow()
+			#print(mscene.items()[objectslist.currentRow()])
                 #print(view.items()[objectslist.currentRow()])
                 #print(objectslist.currentRow())
-                tempZValue = copy.deepcopy(mscene.items()[objectslist.currentRow()].zValue())
+                '''tempZValue = copy.deepcopy(mscene.items()[objectslist.currentRow()].zValue())
                 mscene.items()[objectslist.currentRow()].setZValue(mscene.items()[objectslist.currentRow()-1].zValue())
                 mscene.items()[objectslist.currentRow()-1].setZValue(tempZValue)
                 
@@ -64,19 +65,18 @@ class MyView(QtGui.QGraphicsView):
                 mscene.items()[objectslist.currentRow()] = mscene.items()[objectslist.currentRow()-1]
                 mscene.items()[objectslist.currentRow()-1] = tempItem
 				
-                tempItemView = copy.deepcopy(view.items()[objectslist.currentRow()])
-                view.items()[objectslist.currentRow()] = view.items()[objectslist.currentRow()-1]
-                view.items()[objectslist.currentRow()-1] = tempItemView
+                #tempItemView = copy.deepcopy(view.items()[objectslist.currentRow()])
+                #view.items()[objectslist.currentRow()] = view.items()[objectslist.currentRow()-1]
+                #view.items()[objectslist.currentRow()-1] = tempItemView
 				
 				
                 mscene.update()
                 view.repaint()
-				
-                
-                tempItemList = objectslist.item(objectslist.currentRow()).clone()
-                objectslist.insertItem(objectslist.currentRow()-1,tempItemList)
-                objectslist.takeItem(objectslist.currentRow())
-
+				'''
+                tempItemList = objectslist.item(cR).clone()
+                objectslist.insertItem(cR-1,tempItemList)
+                objectslist.setCurrentItem(objectslist.item(cR-1))
+                objectslist.takeItem(cR+1)
 				
             print("- - -")
         else: print("Select item in objects list")
@@ -116,10 +116,11 @@ def load_test_data():
     #print(dir(objectslist))
 #end load test data
 
-def printItemText():    
-    print(objectslist.currentRow())
+def printItemText():
+    pass
+    #print(objectslist.currentRow())
     #print(dir(view.items()[objectslist.currentRow()]))
-    print(mscene.items()[objectslist.currentRow()].zValue())
+    #print(mscene.items()[objectslist.currentRow()].zValue())
 	
 app = QtGui.QApplication(sys.argv)
 
