@@ -87,7 +87,9 @@ class MyView(QtGui.QGraphicsView):
 			
                 tempItemList = objectslist.item(objectslist.currentRow()).clone()                
                 objectslist.insertItem(objectslist.currentRow()+2,tempItemList)                
-                objectslist.takeItem(objectslist.currentRow())			
+                objectslist.takeItem(objectslist.currentRow())
+				                
+                objectslist.setCurrentItem(objectslist.item(objectslist.currentRow()+1))                
 			
             print("- - -")			
         else: print("Select item in objects list")
