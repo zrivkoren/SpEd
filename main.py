@@ -17,9 +17,10 @@ class MyView(QtGui.QGraphicsView):
             new_img = mscene.addPixmap(QtGui.QPixmap(self.fileName))
             if not (unicode(self.fileName)==''):
                 new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
-                objectslist.addItem(self.fileName)
-                print(dir(mscene.items()))				
-    #ENTER setZValue Image
+                objectslist.addItem(self.fileName)                
+                tempItemList = objectslist.item(objectslist.count()-1).clone()
+                objectslist.insertItem(0, tempItemList)                
+                objectslist.takeItem(objectslist.count()-1)
 				
 
     def RotateImageLeft(self):
@@ -71,17 +72,21 @@ class MyView(QtGui.QGraphicsView):
 		
 		
 #begin load test data			
-def load_test_data():
+def load_test_data():    
     six = mscene.addPixmap(QtGui.QPixmap("img/test1.png"))
     six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test1.png")    
 	
     pix = mscene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
-    objectslist.addItem("img/test2.jpg")	
-    print(objectslist.currentIndex().column())
-    mscene.items()[0].setZValue(0.2)
-    mscene.items()[1].setZValue(0.1)
+    objectslist.addItem("img/test2.jpg")
+	
+    tempItemList = objectslist.item(objectslist.count()-1).clone()
+    objectslist.insertItem(0, tempItemList)                
+    objectslist.takeItem(objectslist.count()-1)
+    #mscene.items()[0].setZValue(0.2)
+    #mscene.items()[1].setZValue(0.1)
+    #print(dir(objectslist))
 #end load test data
 
 def printItemText():    
@@ -103,6 +108,7 @@ mscene = QtGui.QGraphicsScene()
 
 view = MyView(mscene)
 load_test_data()
+
 
 buttonLeftAll  = QtGui.QPushButton("Rotate Left All")
 buttonRightAll = QtGui.QPushButton("Rotate Right All")
