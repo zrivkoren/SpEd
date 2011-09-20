@@ -19,8 +19,9 @@ class MyView(QtGui.QGraphicsView):
                 new_img.setFlags(QtGui.QGraphicsItem.ItemIsMovable)            
                 objectslist.addItem(self.fileName)                
                 tempItemList = objectslist.item(objectslist.count()-1).clone()
-                objectslist.insertItem(0, tempItemList)                
+                objectslist.insertItem(0, tempItemList)          
                 objectslist.takeItem(objectslist.count()-1)
+                mscene.items()[objectslist.currentRow()].setZValue(mscene.items()[objectslist.currentRow()-1].zValue())
 				
 
     def RotateImageLeft(self):
@@ -51,6 +52,10 @@ class MyView(QtGui.QGraphicsView):
                 tempZValue = copy.deepcopy(mscene.items()[objectslist.currentRow()].zValue())
                 mscene.items()[objectslist.currentRow()].setZValue(mscene.items()[objectslist.currentRow()-1].zValue())
                 mscene.items()[objectslist.currentRow()-1].setZValue(tempZValue)
+                
+                tempZValue = copy.deepcopy(view.items()[objectslist.currentRow()].zValue())
+                view.items()[objectslist.currentRow()].setZValue(view.items()[objectslist.currentRow()-1].zValue())
+                view.items()[objectslist.currentRow()-1].setZValue(tempZValue)
 				
                 print("objectslist.currentRow()",objectslist.currentRow())
                 print("ZValue currentRow",mscene.items()[objectslist.currentRow()].zValue())
@@ -58,18 +63,36 @@ class MyView(QtGui.QGraphicsView):
                 tempItem = copy.deepcopy(mscene.items()[objectslist.currentRow()])
                 mscene.items()[objectslist.currentRow()] = mscene.items()[objectslist.currentRow()-1]
                 mscene.items()[objectslist.currentRow()-1] = tempItem
+				
+                tempItemView = copy.deepcopy(view.items()[objectslist.currentRow()])
+                view.items()[objectslist.currentRow()] = view.items()[objectslist.currentRow()-1]
+                view.items()[objectslist.currentRow()-1] = tempItemView
+				
+				
+                mscene.update()
+                view.repaint()
+				
                 
-                tempItemList = objectslist.item(objectslist.currentRow()).clone()                
-                #print(dir(objectslist))
-                objectslist.insertItem(objectslist.currentRow(),objectslist.item(objectslist.currentRow()-1))
+                tempItemList = objectslist.item(objectslist.currentRow()).clone()
                 objectslist.insertItem(objectslist.currentRow()-1,tempItemList)
-                objectslist.takeItem(objectslist.currentRow())               
+                objectslist.takeItem(objectslist.currentRow())
+
+				
             print("- - -")
         else: print("Select item in objects list")
 	
     def imageDown(self):
-        pass
+        if not objectslist.currentRow() == -1:
+            if not objectslist.currentRow() == objectslist.count()-1:
+			
+                tempItemList = objectslist.item(objectslist.currentRow()).clone()                
+                objectslist.insertItem(objectslist.currentRow()+2,tempItemList)                
+                objectslist.takeItem(objectslist.currentRow())			
+			
+            print("- - -")			
+        else: print("Select item in objects list")
 		
+#self.centerOn(1.0, 1.0)
 		
 #begin load test data			
 def load_test_data():    
@@ -84,13 +107,16 @@ def load_test_data():
     tempItemList = objectslist.item(objectslist.count()-1).clone()
     objectslist.insertItem(0, tempItemList)                
     objectslist.takeItem(objectslist.count()-1)
-    #mscene.items()[0].setZValue(0.2)
-    #mscene.items()[1].setZValue(0.1)
+    mscene.items()[0].setZValue(0.1)
+    mscene.items()[1].setZValue(0.2)
+    view.items()[0].setZValue(0.1)
+    view.items()[1].setZValue(0.2)
     #print(dir(objectslist))
 #end load test data
 
 def printItemText():    
     print(objectslist.currentRow())
+    #print(dir(view.items()[objectslist.currentRow()]))
     print(mscene.items()[objectslist.currentRow()].zValue())
 	
 app = QtGui.QApplication(sys.argv)
