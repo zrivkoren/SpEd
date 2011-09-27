@@ -21,7 +21,7 @@ class MyView(QtGui.QGraphicsView):
                 tempItemList = objectslist.item(objectslist.count()-1).clone()
                 objectslist.insertItem(0, tempItemList)          
                 objectslist.takeItem(objectslist.count()-1)
-                mscene.items()[objectslist.currentRow()].setZValue(mscene.items()[objectslist.currentRow()-1].zValue())
+                #mscene.items()[objectslist.currentRow()].setZValue(mscene.items()[0].zValue()+1)
 				
 
     def RotateImageLeft(self):
@@ -46,33 +46,44 @@ class MyView(QtGui.QGraphicsView):
     def imageUp(self):
         if not objectslist.currentRow() == -1:
             if not objectslist.currentRow() == 0:
-                cR = objectslist.currentRow()
-			#print(mscene.items()[objectslist.currentRow()])
-                #print(view.items()[objectslist.currentRow()])
-                #print(objectslist.currentRow())
-                '''tempZValue = copy.deepcopy(mscene.items()[objectslist.currentRow()].zValue())
-                mscene.items()[objectslist.currentRow()].setZValue(mscene.items()[objectslist.currentRow()-1].zValue())
-                mscene.items()[objectslist.currentRow()-1].setZValue(tempZValue)
+                cR = objectslist.currentRow()			
+                #print(mscene.items()[objectslist.currentRow()])
+                #print(mscene.items())
+                #tempItem = copy.deepcopy(mscene.items()[cR])
+                #mscene.items()[cR] = mscene.items()[cR-1]
+                #mscene.items()[cR-1] = tempItem
                 
-                tempZValue = copy.deepcopy(view.items()[objectslist.currentRow()].zValue())
-                view.items()[objectslist.currentRow()].setZValue(view.items()[objectslist.currentRow()-1].zValue())
-                view.items()[objectslist.currentRow()-1].setZValue(tempZValue)
+                #tempZValue = copy.deepcopy(mscene.items()[cR].zValue())
+                #mscene.items()[cR].setZValue(mscene.items()[cR-1].zValue())
+                #mscene.items()[cR-1].setZValue(tempZValue)
 				
-                print("objectslist.currentRow()",objectslist.currentRow())
-                print("ZValue currentRow",mscene.items()[objectslist.currentRow()].zValue())
-                print("ZValue currentRow -1",mscene.items()[objectslist.currentRow()-1].zValue())
-                tempItem = copy.deepcopy(mscene.items()[objectslist.currentRow()])
-                mscene.items()[objectslist.currentRow()] = mscene.items()[objectslist.currentRow()-1]
-                mscene.items()[objectslist.currentRow()-1] = tempItem
+                tempItem = copy.copy(mscene.items()[cR])
+                mscene.removeItem(mscene.items()[cR])
+                mscene.addItem(tempItem)
+                
+                #tempZValue = copy.deepcopy(view.items()[objectslist.currentRow()].zValue())
+                #view.items()[cR].setZValue(view.items()[cR-1].zValue())
+                #view.items()[cR-1].setZValue(tempZValue)
 				
-                #tempItemView = copy.deepcopy(view.items()[objectslist.currentRow()])
-                #view.items()[objectslist.currentRow()] = view.items()[objectslist.currentRow()-1]
-                #view.items()[objectslist.currentRow()-1] = tempItemView
+                print("objectslist.currentRow()",cR)
+                #print("ZValue currentRow",mscene.items()[cR].zValue())
+                #print("ZValue currentRow -1",mscene.items()[cR-1].zValue())
+                print("objectslist.count", objectslist.count())
+                print("- | - | - | - | - ")
+                #c = 0
+				
+                #while c < objectslist.count():
+                #    print(c, "zValue", mscene.items()[c].zValue())
+                #    c = c + 1
+				
+                #tempItemView = copy.deepcopy(view.items()[cR])
+                #view.items()[cR] = view.items()[cR-1]
+                #view.items()[cR-1] = tempItemView
 				
 				
-                mscene.update()
-                view.repaint()
-				'''
+                #mscene.update()
+                #view.repaint()
+				
                 tempItemList = objectslist.item(cR).clone()
                 objectslist.insertItem(cR-1,tempItemList)
                 objectslist.setCurrentItem(objectslist.item(cR-1))
@@ -106,19 +117,31 @@ def load_test_data():
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test2.jpg")
 	
-    tempItemList = objectslist.item(objectslist.count()-1).clone()
-    objectslist.insertItem(0, tempItemList)                
-    objectslist.takeItem(objectslist.count()-1)
-    mscene.items()[0].setZValue(0.1)
-    mscene.items()[1].setZValue(0.2)
-    view.items()[0].setZValue(0.1)
-    view.items()[1].setZValue(0.2)
+    #tempItemList = objectslist.item(objectslist.count()-1).clone()
+    #objectslist.insertItem(0, tempItemList)                
+    #objectslist.takeItem(objectslist.count()-1)
+	
+    #mscene.items()[0].setZValue(0.2)
+    #mscene.items()[1].setZValue(0.1)
+    #view.items()[0].setZValue(0.1)
+    #view.items()[1].setZValue(0.2)'''
     #print(dir(objectslist))
+    
 #end load test data
 
 def printItemText():
-    pass
-    #print(objectslist.currentRow())
+    print("objectslist.currentRow: ", objectslist.currentRow())
+    #print(dir(MyView))
+    #print(mscene.items())
+    i = 0
+    print("objectslist.count",objectslist.count())
+    #print("current objects", mscene.items()[objectslist.currentRow()])
+    #while i < objectslist.count()-1:
+    #    mscene.items()[i].setX(0)
+    #    i = i + 1
+    #mscene.items()[objectslist.currentRow()].setX(350)
+    #print(dir(view))
+    #print(dir(mscene.items()[objectslist.currentRow()]))
     #print(dir(view.items()[objectslist.currentRow()]))
     #print(mscene.items()[objectslist.currentRow()].zValue())
 	
@@ -134,6 +157,7 @@ objectslist = QtGui.QListWidget()
 #objectslist.setSortingEnabled(True)
 #objectslist.setDragDropMode(objectslist.InternalMove)
 mscene = QtGui.QGraphicsScene()
+mscene.setItemIndexMethod(-1)
 
 view = MyView(mscene)
 load_test_data()
