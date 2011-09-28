@@ -37,11 +37,15 @@ class MyView(QtGui.QGraphicsView):
 
     def RotateImageLeft(self):
         if not objectslist.currentRow() == -1:
-            mscene.items()[objectslist.currentRow()].rotate(-valueAngle.value())
+            for i in range(len(mainList)):
+                if objectslist.currentRow() == mainList[i][3]:                        
+                        mscene.items()[mainList[i][0]].rotate(-valueAngle.value())
         else: print("Select item in objects list")
     def RotateImageRight(self):
         if not objectslist.currentRow() == -1:
-            mscene.items()[objectslist.currentRow()].rotate(valueAngle.value())
+            for i in range(len(mainList)):
+                if objectslist.currentRow() == mainList[i][3]:                        
+                    mscene.items()[mainList[i][0]].rotate(valueAngle.value())            
         else: print("Select item in objects list")            
 
     def saveImage(self):
@@ -149,7 +153,7 @@ buttonRightAll = QtGui.QPushButton("Rotate Right All")
 buttonAddFile = QtGui.QPushButton("Add file to canvas")
 buttonDelFile = QtGui.QPushButton("Delete image from canvas")
 buttonRotateLeftOne = QtGui.QPushButton("Rotate left one image")
-buttonRotateRightOne = QtGui.QPushButton("Rotate left one image")
+buttonRotateRightOne = QtGui.QPushButton("Rotate right one image")
 buttonSave = QtGui.QPushButton("Save canvas")
 buttonUp = QtGui.QPushButton("Image up")
 buttonDown = QtGui.QPushButton("Image down")
