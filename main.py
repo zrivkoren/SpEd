@@ -20,8 +20,8 @@ class MyView(QtGui.QGraphicsView):
                 objectslist.addItem(self.fileName)                
                 tempItemList = objectslist.item(objectslist.count()-1).clone()
                 objectslist.insertItem(0, tempItemList)          
-                objectslist.takeItem(objectslist.count()-1)
-                #mscene.items()[objectslist.currentRow()].setZValue(mscene.items()[0].zValue()+1)
+                objectslist.takeItem(objectslist.count()-1)                                
+                mscene.items()[objectslist.count()-1].setZValue(mscene.items()[objectslist.count()-2].zValue()+1)
 				
 
     def RotateImageLeft(self):
@@ -57,9 +57,9 @@ class MyView(QtGui.QGraphicsView):
                 #mscene.items()[cR].setZValue(mscene.items()[cR-1].zValue())
                 #mscene.items()[cR-1].setZValue(tempZValue)
 				
-                tempItem = copy.copy(mscene.items()[cR])
-                mscene.removeItem(mscene.items()[cR])
-                mscene.addItem(tempItem)
+                #tempItem = copy.copy(mscene.items()[cR])
+                #mscene.removeItem(mscene.items()[cR])
+                #mscene.addItem(tempItem)
                 
                 #tempZValue = copy.deepcopy(view.items()[objectslist.currentRow()].zValue())
                 #view.items()[cR].setZValue(view.items()[cR-1].zValue())
@@ -67,8 +67,7 @@ class MyView(QtGui.QGraphicsView):
 				
                 print("objectslist.currentRow()",cR)
                 #print("ZValue currentRow",mscene.items()[cR].zValue())
-                #print("ZValue currentRow -1",mscene.items()[cR-1].zValue())
-                print("objectslist.count", objectslist.count())
+                #print("ZValue currentRow -1",mscene.items()[cR-1].zValue())                
                 print("- | - | - | - | - ")
                 #c = 0
 				
@@ -88,6 +87,7 @@ class MyView(QtGui.QGraphicsView):
                 objectslist.insertItem(cR-1,tempItemList)
                 objectslist.setCurrentItem(objectslist.item(cR-1))
                 objectslist.takeItem(cR+1)
+                print("objectslist.count", objectslist.count())
 				
             print("- - -")
         else: print("Select item in objects list")
@@ -109,36 +109,42 @@ class MyView(QtGui.QGraphicsView):
 		
 #begin load test data			
 def load_test_data():    
+    pix = mscene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
+    pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
+    objectslist.addItem("img/test2.jpg")
+
     six = mscene.addPixmap(QtGui.QPixmap("img/test1.png"))
     six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test1.png")    
 	
-    pix = mscene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
-    pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
-    objectslist.addItem("img/test2.jpg")
+
 	
     #tempItemList = objectslist.item(objectslist.count()-1).clone()
     #objectslist.insertItem(0, tempItemList)                
     #objectslist.takeItem(objectslist.count()-1)
 	
-    #mscene.items()[0].setZValue(0.2)
-    #mscene.items()[1].setZValue(0.1)
+    tempItemList = objectslist.item(objectslist.count()-1).clone()
+    objectslist.insertItem(0, tempItemList)          
+    objectslist.takeItem(objectslist.count()-1)
+	
+    mscene.items()[0].setZValue(99)
+    mscene.items()[1].setZValue(100)
     #view.items()[0].setZValue(0.1)
     #view.items()[1].setZValue(0.2)'''
-    #print(dir(objectslist))
+    #print(dir(mscene.items()))
     
 #end load test data
 
 def printItemText():
     print("objectslist.currentRow: ", objectslist.currentRow())
     #print(dir(MyView))
-    #print(mscene.items())
-    i = 0
+    #print(mscene.items())    
     print("objectslist.count",objectslist.count())
     #print("current objects", mscene.items()[objectslist.currentRow()])
-    #while i < objectslist.count()-1:
-    #    mscene.items()[i].setX(0)
-    #    i = i + 1
+    i = 0
+    while i < objectslist.count():
+        print("i = ", i, "zValue = ", mscene.items()[i].zValue())
+        i += 1
     #mscene.items()[objectslist.currentRow()].setX(350)
     #print(dir(view))
     #print(dir(mscene.items()[objectslist.currentRow()]))
