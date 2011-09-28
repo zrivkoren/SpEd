@@ -62,7 +62,28 @@ class MyView(QtGui.QGraphicsView):
     def imageUp(self):
         if not objectslist.currentRow() == -1:
             if not objectslist.currentRow() == 0:
-                cR = objectslist.currentRow()			
+                cR = objectslist.currentRow()
+                
+                print(mainList)
+				
+                for i in range(len(mainList)):
+                    if cR == mainList[i][3]:                        
+                        tempList0 = copy.deepcopy(mainList[i][0])
+                        tempList1 = copy.deepcopy(mainList[i][1])
+                        mainList[i][0] = mainList[i+1][0]
+                        mainList[i][1] = mainList[i+1][1]
+                        mainList[i+1][0] = tempList0
+                        mainList[i+1][1] = tempList1
+						
+                print("--------------------------------------")
+                print(mainList)
+				
+				
+                for i in range(len(mainList)):
+                    for k in range(len(mainList)):
+                        if i == mainList[k][0]:                              				
+                            mscene.items()[mainList[k][0]].setZValue(mainList[k][2]) #accordance current row in objectsList and record in mainList
+				
                 #print(mscene.items()[objectslist.currentRow()])
                 #print(mscene.items())
                 #tempItem = copy.deepcopy(mscene.items()[cR])
@@ -102,9 +123,7 @@ class MyView(QtGui.QGraphicsView):
                 tempItemList = objectslist.item(cR).clone()
                 objectslist.insertItem(cR-1,tempItemList)
                 objectslist.setCurrentItem(objectslist.item(cR-1))
-                objectslist.takeItem(cR+1)
-                print("objectslist.count", objectslist.count())
-				
+                objectslist.takeItem(cR+1)				
             print("- - -")
         else: print("Select item in objects list")
 	
@@ -159,9 +178,10 @@ def printItemText():
     #print(dir(MyView))
     #print(mscene.items())    
     print("objectslist.count",objectslist.count())
+    print("len SCENE = ", len(mscene.items()))
     #print("current objects", mscene.items()[objectslist.currentRow()])
-    i = 0
-    while i < objectslist.count():
+    i = 0    
+    while i < len(mscene.items()):
         print("i = ", i, "zValue = ", mscene.items()[i].zValue())
         i += 1
     #mscene.items()[objectslist.currentRow()].setX(350)
