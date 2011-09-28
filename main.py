@@ -20,8 +20,16 @@ class MyView(QtGui.QGraphicsView):
                 objectslist.addItem(self.fileName)                
                 tempItemList = objectslist.item(objectslist.count()-1).clone()
                 objectslist.insertItem(0, tempItemList)          
-                objectslist.takeItem(objectslist.count()-1)                                
-                mscene.items()[objectslist.count()-1].setZValue(mscene.items()[objectslist.count()-2].zValue()+1)
+                objectslist.takeItem(objectslist.count()-1)
+                
+                
+                mainList.append([objectslist.count()-1, 0, mainList[len(mainList)-1][2]+1])
+                for i in range(objectslist.count()-1):
+                    for j in range(2):
+                        if j == 1:
+                            mainList[i][j] = mainList[i][j] +1
+                    #mscene.items()[objectslist.count()-1].setZValue(mscene.items()[objectslist.count()-2].zValue()+1)
+                print(mainList)
 				
 
     def RotateImageLeft(self):
@@ -73,7 +81,7 @@ class MyView(QtGui.QGraphicsView):
 				
                 #while c < objectslist.count():
                 #    print(c, "zValue", mscene.items()[c].zValue())
-                #    c = c + 1
+                #    c = c + 1				                
 				
                 #tempItemView = copy.deepcopy(view.items()[cR])
                 #view.items()[cR] = view.items()[cR-1]
@@ -112,12 +120,15 @@ def load_test_data():
     pix = mscene.addPixmap(QtGui.QPixmap("img/test2.jpg"))
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test2.jpg")
+    #print(objectslist.count())	
+    mainList.append([0, 0, 99])    
 
     six = mscene.addPixmap(QtGui.QPixmap("img/test1.png"))
     six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
-    objectslist.addItem("img/test1.png")    
-	
-
+    objectslist.addItem("img/test1.png")
+    mainList.append([1, 0, 100])
+    mainList[0] = [0, 1, 99]
+    #print(mainList)
 	
     #tempItemList = objectslist.item(objectslist.count()-1).clone()
     #objectslist.insertItem(0, tempItemList)                
@@ -158,9 +169,9 @@ widget.setWindowTitle('SpEd: Frame Editor')
 widget.setWindowIcon(QtGui.QIcon('img/icon.png'))
 widget.resize(800, 600)
 
+mainList = []
 dialog = QtGui.QFileDialog()
 objectslist = QtGui.QListWidget()
-#objectslist.setSortingEnabled(True)
 #objectslist.setDragDropMode(objectslist.InternalMove)
 mscene = QtGui.QGraphicsScene()
 mscene.setItemIndexMethod(-1)
