@@ -23,13 +23,21 @@ class MyView(QtGui.QGraphicsView):
                 objectslist.takeItem(objectslist.count()-1)
                 
                 
-                mainList.append([objectslist.count()-1, 0, mainList[len(mainList)-1][2]+1])
+                mainList.append([objectslist.count()-1, 0, mainList[len(mainList)-1][2]+1, 0])
                 for i in range(objectslist.count()-1):
-                    for j in range(2):
+                    for j in range(4):
                         if j == 1:
                             mainList[i][j] = mainList[i][j] +1
-                    #mscene.items()[objectslist.count()-1].setZValue(mscene.items()[objectslist.count()-2].zValue()+1)
+                        if j == 3:
+                            mainList[i][j] = mainList[i][j] +1
+
                 print(mainList)
+				
+                for i in range(len(mainList)):
+                    for k in range(len(mainList)):
+                        if i == mainList[k][0]:                              				
+                            mscene.items()[mainList[k][0]].setZValue(mainList[k][2]) #accordance current row in objectsList and record in mainList
+                        
 				
 
     def RotateImageLeft(self):
@@ -86,7 +94,7 @@ class MyView(QtGui.QGraphicsView):
                 #tempItemView = copy.deepcopy(view.items()[cR])
                 #view.items()[cR] = view.items()[cR-1]
                 #view.items()[cR-1] = tempItemView
-				
+                #accordance = mainList[cR][1]				#accordance current row in objectsList and record in mainList
 				
                 #mscene.update()
                 #view.repaint()
@@ -121,13 +129,13 @@ def load_test_data():
     pix.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test2.jpg")
     #print(objectslist.count())	
-    mainList.append([0, 0, 99])    
+    mainList.append([0, 0, 99, 0])    
 
     six = mscene.addPixmap(QtGui.QPixmap("img/test1.png"))
     six.setFlags(QtGui.QGraphicsItem.ItemIsMovable)
     objectslist.addItem("img/test1.png")
-    mainList.append([1, 0, 100])
-    mainList[0] = [0, 1, 99]
+    mainList.append([1, 0, 100, 0])
+    mainList[0] = [0, 1, 99, 1]
     #print(mainList)
 	
     #tempItemList = objectslist.item(objectslist.count()-1).clone()
