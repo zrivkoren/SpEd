@@ -39,7 +39,7 @@ class MyView(QtGui.QGraphicsView):
         if not objectslist.currentRow() == -1:
             for i in range(len(mainList)):
                 if objectslist.currentRow() == mainList[i][3]:                        
-                        mscene.items()[mainList[i][0]].rotate(-valueAngle.value())
+                    mscene.items()[mainList[i][0]].rotate(-valueAngle.value())
         else: print("Select item in objects list")
     def RotateImageRight(self):
         if not objectslist.currentRow() == -1:
