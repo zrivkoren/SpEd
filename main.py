@@ -87,11 +87,23 @@ class MyView(QtGui.QGraphicsView):
     def imageDown(self):
         if not objectslist.currentRow() == -1:
             if not objectslist.currentRow() == objectslist.count()-1:
-			
-                tempItemList = objectslist.item(objectslist.currentRow()).clone()                
-                objectslist.insertItem(objectslist.currentRow()+2,tempItemList)                
+                for i in range(len(mainList)):
+                    if objectslist.currentRow() == mainList[i][3]:                        
+                        tempList0 = copy.deepcopy(mainList[i][0])
+                        tempList1 = copy.deepcopy(mainList[i][1])
+                        mainList[i][0] = mainList[i-1][0]
+                        mainList[i][1] = mainList[i-1][1]
+                        mainList[i-1][0] = tempList0
+                        mainList[i-1][1] = tempList1
+
+                for i in range(len(mainList)):
+                    for k in range(len(mainList)):
+                        if i == mainList[k][0]:                              				
+                            mscene.items()[mainList[k][0]].setZValue(mainList[k][2]) #accordance current row in objectsList and record in mainList
+						
+                tempItemList = objectslist.item(objectslist.currentRow()).clone()
+                objectslist.insertItem(objectslist.currentRow()+2,tempItemList)
                 objectslist.takeItem(objectslist.currentRow())
-				                
                 objectslist.setCurrentItem(objectslist.item(objectslist.currentRow()+1))                
 			
             print("- - -")			
